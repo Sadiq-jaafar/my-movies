@@ -1,24 +1,24 @@
-import React from 'react'
+import React from 'react';
 
-
-interface props{
+interface Props {
     searchTerm: string;
-    SetSearchTerm : string;
+    setSearchTerm: (value: string) => void;
 }
 
-const Search = ({searchTerm,setSearchTerm}:props) => {
+const Search = ({ searchTerm, setSearchTerm }: Props) => {
   return (
     <div className='search'>
         <div className="">
             <img src="search.svg" alt="search" />
             <input 
-            type="text"
-            placeholder='SEarch through Thousandsof movies'
-            value={searchTerm}
-            onChange={(e)=> setSearchTerm(e.target.value)}/>
+                type="text"
+                placeholder='Search through thousands of movies'
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
         </div>
     </div>
   )
 }
 
-export default Search
+export default Search;
