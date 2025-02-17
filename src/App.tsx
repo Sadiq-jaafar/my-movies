@@ -7,11 +7,11 @@ import { useDebounce } from 'use-debounce';
 
 interface Movie {
   id: number
-    title: string
-    vote_average: number
-    poster_path: string
-    release_date:()=> void
-    original_language: string
+  title: string
+  vote_average: number
+  poster_path: string
+  release_date: string
+  original_language: string
 }
 
 const API_BASE_URL = import.meta.env.VITE_API_URL
@@ -31,15 +31,17 @@ const App = () => {
   const [movieList, setMovieList] = useState<Movie[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
-  const [debouncedSearchTerm, setDebouncedSearchTerm]=useState('')
-  useDebounce(()=> setDebouncedSearchTerm(searchTerm), 500, [searchTerm])
+  const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
 
-  const fetchMovies = async ( query = '') => {
+  const fetchMovies = async (query = '') => {
     setIsLoading(true)
     setErrorMessage('')
 
     try {
-      const endpoint = query? `${API_BASE_URL}/search/movie?query=${encodeURI}` :`${API_BASE_URL}/discover/movie?sort_by=popularity.desc`
+      const endpoint = query
+        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+        : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`
+
       const response = await fetch(endpoint, API_OPTIONS)
 
       if (!response.ok) {
@@ -69,7 +71,7 @@ const App = () => {
   return (
     <main>
       <div className="pattern bg-url('./hero-bg.png')">
-        <div className="wrapper" >
+        <div className="wrapper">
           <header>
             <img src="./hero-img.png" alt="hero Banner" />
             <h1>Find <span className="text-gradient">Movies</span> You'll Enjoy Without the Hassle</h1>
@@ -87,7 +89,7 @@ const App = () => {
             ) : (
               <ul>
                 {movieList.map((movie) => (
-                  <MovieCard key={movie.id} movie={movie}/>
+                  <MovieCard key={movie.id} movie={movie} />
                 ))}
               </ul>
             )}

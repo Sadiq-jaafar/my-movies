@@ -8,7 +8,7 @@ interface MovieCardProps {
     title: string
     vote_average: number
     poster_path: string
-    release_date:()=> void
+    release_date:string
     original_language: string
     // Add other movie properties as needed
   }
