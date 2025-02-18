@@ -17,13 +17,13 @@ interface Movie {
 }
 
 // Define the expected structure for an Appwrite document
-interface SearchDocument {
-    $id: string;
-    searchTerm: string;
-    count: number;
-    movie_id: number;
-    poster_url?: string | null;
-}
+// interface SearchDocument {
+//     $id: string;
+//     searchTerm: string;
+//     count: number;
+//     movie_id: number;
+//     poster_url?: string | null;
+// }
 
 // Function to update search count in Appwrite database
 export const updateSearchCount = async (searchTerm: string, movie: Movie): Promise<void> => {

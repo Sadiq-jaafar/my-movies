@@ -15,6 +15,16 @@ interface Movie {
   original_language: string
 }
 
+interface TrendingMovie {
+  $id: string;
+  searchTerm: string;
+  count: number;
+  poster_url: string;
+  movie_id: number;
+  title:string
+}
+
+
 const API_BASE_URL = import.meta.env.VITE_API_URL
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
@@ -31,7 +41,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [movieList, setMovieList] = useState<Movie[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const[trendingMovies, setTrendingMovies] =useState([])
+  const[trendingMovies, setTrendingMovies] =useState<TrendingMovie[]>([])
 
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
 
@@ -74,6 +84,7 @@ const App = () => {
     setIsLoading(true)
     try {
       const movies = await getTrendingMovies();
+      //@ts-expect-error-type
       setTrendingMovies(movies)
     } catch (error) {
       console.log(`error fetching trending movies:${error}`);
@@ -109,7 +120,8 @@ const App = () => {
         <li key={movie.$id}>
           <p>{index + 1}</p>
           <img src={movie.poster_url} alt={movie.title} />
-          <p>{movie.title}</p>
+          
+        
         </li>
       ))}
     </ul>
